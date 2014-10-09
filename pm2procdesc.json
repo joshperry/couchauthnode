@@ -1,0 +1,10 @@
+{
+	"apps" : [
+		{
+			"name": "couchmail",
+			"script": "app.js",
+			"watch": "true",
+			"exec_mode": "fork_mode"
+		}
+	]
+}

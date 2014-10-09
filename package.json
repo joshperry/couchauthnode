@@ -1,0 +1,13 @@
+{
+	"name" : "couchmail",
+	"description" : "Provides virtual mail alias and domain lookup to Postfix and Dovecot from CouchDB",
+	"version" : "0.1.0",
+	"license": "MIT",
+	"author" : { "name" : "Josh Perry", "email" : "josh@6bit.com" },
+	"repository" : { "type" : "git", "url" : "http://github.com/joshperry/couchmail" },
+	"dependencies" : {
+		"carrier" : "0.2.x",
+		"nano" : "4.1.x"
+	},
+	"main" : "./app.js"
+}
