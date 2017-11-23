@@ -7,7 +7,7 @@ var net 	= require('net'),
 
 var dbuser = process.env.COUCH_USER,
 	dbpass = process.env.COUCH_PASSWORD,
-	db = require('nano')('http://' + dbuser + ':' + dbpass + '@localhost:5984/mail'),
+	db = require('nano')('http://' + dbuser + ':' + dbpass + '@localhost:5984/mail');
 
 var postfixHandler = function(serviceName, getHandler) {
 	var clientId = 0;
@@ -185,7 +185,7 @@ net.createServer(domainHandler()).listen(40571, 'localhost');
 net.createServer(mailboxHandler()).listen(40572, 'localhost');
 net.createServer(aliasHandler()).listen(40573, 'localhost');
 
-var dovecotSocket = '/var/run/dovecot-auth.sock';
+var dovecotSocket = '/var/run/couchmail/dovecot-auth.sock';
 var dovecotServer = net.createServer(dovecotAuthHandler());
 var startDovecotServer = function() {
 	var oldumask = process.umask(000);

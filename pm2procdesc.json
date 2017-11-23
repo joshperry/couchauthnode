@@ -4,7 +4,11 @@
 			"name": "couchmail",
 			"script": "app.js",
 			"watch": "true",
-			"exec_mode": "fork_mode"
+			"exec_mode": "fork_mode",
+			"env": {
+				"COUCH_USER": "mail",
+				"COUCH_PASSWORD": "Everyone wants my mail!"
+			}
 		}
 	]
 }
