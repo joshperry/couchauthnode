@@ -64,15 +64,15 @@ Dovecot all the things!!
 
 ## The Pile of TODOs
 
--[] Arrange for the `/var/run/couchmail/` directory to exist before start
--[] Kickass management UI that's not Futon
--[] Add webmail client
--[] Containerize, duh
-  -[] couchmail
-  -[] Dovecot
-  -[] Postfix
-  -[] spamassassin
--[] Docker compose config
--[] Automate PKI config with letsencrypt.org
--[] Can we automate the DNS config in common deployment target environments?
--[] Kubernetes configs
+- [ ] Arrange for the `/var/run/couchmail/` directory to exist before start
+- [ ] Kickass management UI that's not Futon
+- [ ] Add webmail client
+- [ ] Containerize, duh
+  - [ ] couchmail
+  - [ ] Dovecot
+  - [ ] Postfix
+  - [ ] spamassassin
+- [ ] Docker compose config
+- [ ] Automate PKI config with letsencrypt.org
+- [ ] Can we automate the DNS config in common deployment target environments?
+- [ ] Kubernetes configs
