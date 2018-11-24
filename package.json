@@ -5,6 +5,9 @@
 	"license": "MIT",
 	"author" : { "name" : "Josh Perry", "email" : "josh@6bit.com" },
 	"repository" : { "type" : "git", "url" : "http://github.com/joshperry/couchmail" },
+	"scripts": {
+		"start": "node app.js"
+	},
 	"dependencies" : {
 		"carrier" : "^0.2.0",
 		"nano" : "^5.11.0"

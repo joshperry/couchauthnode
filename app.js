@@ -1,5 +1,6 @@
 var net 	= require('net'),
 	fs		= require('fs'),
+  path = require('path'),
 	events 	= require('events'),
 	util 	= require('util'),
 	carrier	= require('carrier');
@@ -185,7 +186,10 @@ net.createServer(domainHandler()).listen(40571, 'localhost');
 net.createServer(mailboxHandler()).listen(40572, 'localhost');
 net.createServer(aliasHandler()).listen(40573, 'localhost');
 
+
 var dovecotSocket = '/var/run/couchmail/dovecot-auth.sock';
+fs.mkdirSync(path.dirname(dovecotSocket));
+
 var dovecotServer = net.createServer(dovecotAuthHandler());
 var startDovecotServer = function() {
 	var oldumask = process.umask(000);
