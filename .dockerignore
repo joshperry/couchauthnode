@@ -1,3 +1,6 @@
+.git
+.gitignore
+.eslintrc.js
 node_modules
 Dockerfile
-README.js
+README.md

@@ -1,16 +1,27 @@
 {
-	"name" : "couchmail",
-	"description" : "Provides virtual mail alias and domain lookup to Postfix and Dovecot from CouchDB",
-	"version" : "0.1.0",
+	"name": "couchmail",
+	"description": "Provides virtual mail user, alias and domain lookup to Postfix and Dovecot from data stored in CouchDB",
+	"version": "0.2.0",
 	"license": "MIT",
-	"author" : { "name" : "Josh Perry", "email" : "josh@6bit.com" },
-	"repository" : { "type" : "git", "url" : "http://github.com/joshperry/couchmail" },
+	"author": {
+		"name": "Josh Perry",
+		"email": "josh@6bit.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "http://github.com/joshperry/couchmail"
+	},
 	"scripts": {
 		"start": "node app.js"
 	},
-	"dependencies" : {
-		"carrier" : "^0.2.0",
-		"nano" : "^5.11.0"
+	"dependencies": {
+		"carrier": "^0.3.0",
+		"nano": "^8.1.0"
 	},
-	"main" : "./app.js"
+	"main": "./app.js",
+	"devDependencies": {
+		"eslint": "^6.1.0",
+		"eslint-config-airbnb-base": "^14.0.0",
+		"eslint-plugin-import": "^2.18.2"
+	}
 }
