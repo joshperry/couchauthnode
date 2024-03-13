@@ -45,13 +45,13 @@ The `password` property is the--ideally--salted and hashed password in a format 
 dovecot understands.
 
 The `sieve` property is a hash with the each sieve script name as the keys, with
-the value being the ID--a random UUID--of a document holding the scripts
+the value being the ID--a random UUID--of a document holding the script's
 contents. The content document holds the script in its `script` property.
 
 When we return the ID of the script content document, we include its `_rev`
 appended as Dovecot caches any particular sieve script until its ID changes.
 This lets us use simple static references between documents in our data model,
-while automatically invalidating Dovecot's cache anytime a scripts content
+while automatically invalidating Dovecot's cache anytime a script's content
 document is changed.
 
 This also accepts writes of sieve scripts for clients that support dovecot's
