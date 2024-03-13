@@ -3,10 +3,10 @@ Couch Mail
 
 The brains behind a set of opinionated applications and configurations for
 deploying a multi-domain capable Postfix and Dovecot stack with user, alias,
-and seive scripts stored in CouchDB.
+and sieve scripts stored in CouchDB.
 
 It also implements the Dovecot authentication protocol, which is widely used
-for user auth _and_ config (like seive scripts). 
+for user auth _and_ config (like sieve scripts). 
 
 ## Config
 
@@ -38,18 +38,21 @@ The dovecot auth protocol listens on a socket at
 
 This auth protocol looks up data by email address, so it is stored on the same
 document that postfix searches to see if a mailbox exists. The dovecot
-integration expects to find a `password` and optionally a `seive` property on
+integration expects to find a `password` and optionally a `sieve` property on
 the mailbox document.
 
 The `password` property is the--ideally--salted and hashed password in a format that
 dovecot understands.
 
-The `seive` property is a hash with the each seive script name as the keys, with
+The `sieve` property is a hash with the each sieve script name as the keys, with
 the value being the ID--a random UUID--of a document holding the scripts
 contents. The content document holds the script in its `script` property.
 
 When we return the ID of the script content document, we include its `_rev`
-appended as Dovecot caches any particular seive script until its ID changes.
+appended as Dovecot caches any particular sieve script until its ID changes.
 This lets us use simple static references between documents in our data model,
 while automatically invalidating Dovecot's cache anytime a scripts content
 document is changed.
+
+This also accepts writes of sieve scripts for clients that support dovecot's
+managesieve protocol.
