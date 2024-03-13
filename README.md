@@ -36,23 +36,22 @@ The dovecot auth protocol listens on a socket at
 `/var/run/couchmail/dovecot-auth.sock` by default. Can be configured with
 `COUCH_AUTH_SOCK` envvar.
 
-This auth protocol looks up data by email address, so it is stored on the same
-document that postfix searches to see if a mailbox exists. The dovecot
-integration expects to find a `password` and optionally a `sieve` property on
-the mailbox document.
+This auth protocol looks up data by email address, so its config is stored on
+the same document used for postfix mailbox lookups. The dovecot integration
+expects to find a `password` and optionally a `sieve` property on the mailbox
+document.
 
 The `password` property is the--ideally--salted and hashed password in a format that
 dovecot understands.
 
-The `sieve` property is a hash with each sieve script's name as a key, and
-the value being the ID--a random UUID--of a document holding the its
-contents in the `script` property.
+The `sieve` property is a hash object with each sieve script's name as a key,
+and the value being the ID--a random UUID--of a document holding its contents
+in the `script` property.
 
 Because dovecot memoizes its script build cache based on the script ID we
-return, we append the document's `_rev` to the value we return. This lets us
-use simple static references between documents in our data model, while
-automatically invalidating Dovecot's cache anytime a script's content document
-is changed.
+return, we append the content document's `_rev` to the value we return. This
+lets us use simple static references between documents in our data model, while
+automatically invalidating Dovecot's cache anytime a script's contents change.
 
 This also accepts writes of sieve script contents for in support of dovecot's
 managesieve service.
