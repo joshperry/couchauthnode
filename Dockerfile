@@ -14,4 +14,4 @@ COPY ./ .
 
 RUN npm install --production
 
-ENTRYPOINT ["npm", "start"]
+ENTRYPOINT ["node", "."]
