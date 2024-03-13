@@ -8,6 +8,6 @@ RUN chown -R node:node /usr/src/app
 
 USER node
 
-RUN npm install --production
+RUN npm install --omit=dev
 
 ENTRYPOINT ["npm", "start"]
