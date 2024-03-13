@@ -18,13 +18,22 @@
         devenv.shells.default = {
           languages.javascript.enable = true;
 
+          services.couchdb = {
+            enable = true;
+          };
+
           imports = [ ];
 
           env = {
+            COUCH_USER = "admin";
+            COUCH_PASSWORD = "admin";
+            COUCH_HOST = "localhost";
+            COUCH_AUTH_SOCK = ".devenv/state/dovecot-auth.sock";
           };
 
           packages = with pkgs;[
             nodePackages.eslint
+            nodePackages.npm
           ];
         };
 

@@ -205,7 +205,7 @@ net.createServer(aliasHandler())
   .listen(40573)
 
 console.log('Dovecot: creating Unix listener')
-const dovecotSocket = '/var/run/couchmail/dovecot-auth.sock'
+const dovecotSocket = process.env.COUCH_AUTH_SOCK || '/var/run/couchmail/dovecot-auth.sock'
 const dovecotServer = net.createServer(dovecotAuthHandler())
   .on('error', err => console.log(err))
 const startDovecotServer = () => {
