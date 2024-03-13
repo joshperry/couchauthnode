@@ -1,17 +1,13 @@
-FROM alpine:3.10
-
-RUN apk --no-cache add nodejs npm && \
-	addgroup -g 1000 -S couchmail && \
-    adduser -u 1000 -S couchmail -G couchmail && \
-	mkdir -p /usr/src/app && \
-	chown couchmail:couchmail /usr/src/app
+FROM node:18-alpine
 
 WORKDIR /usr/src/app
 
-USER couchmail
-
 COPY ./ .
+
+RUN chown -R node:node /usr/src/app
+
+USER node
 
 RUN npm install --production
 
-ENTRYPOINT ["node", "."]
+ENTRYPOINT ["npm", "start"]
