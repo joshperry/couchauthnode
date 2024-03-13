@@ -7,9 +7,14 @@ const net = require('net'),
 const dbuser = process.env.COUCH_USER,
       dbpass = process.env.COUCH_PASSWORD,
       dbhost = process.env.COUCH_HOST
-      dburl = `http://${dbuser}:${dbpass}@${dbhost}:5984/mail`
+      dburl = `http://${dbhost}:5984/mail`
       db = require('nano')({
         url: dburl,
+        requestDefaults: {
+          headers: {
+            Authorization: `Basic ${Buffer.from(`${dbuser}:${dbpass}`).toString('base64')}`,
+          },
+        },
 //        log: (id, args) => {
 //          console.log(id, args)
 //        },
@@ -98,9 +103,9 @@ const aliasHandler = () =>
 
 // This processes escaped values in stored dovecot data
 const dovecotEscape = (str) => {
-  return str.replace(/\0o001/g,'\0o0011')
-    .replace(/\n/g,'\0o001n')
-    .replace(/\t/g, '\0o001t')
+  return str.replace(/\x01/g,'\x011')
+    .replace(/\n/g,'\x01n')
+    .replace(/\t/g, '\x01t')
 }
 
 // Handles authentication requests in the dovecot auth format
@@ -116,7 +121,7 @@ const dovecotAuthHandler = () => {
     client.on('end', () => { console.log('Dovecot: client disconnected') })
 
     carrier.carry(client, null, 'ascii')
-      .on('line', line => {
+      .on('line', async line => {
         console.log(`Dovecot: got request line (${line})`)
         const cmd = line[0]
 
@@ -133,17 +138,16 @@ const dovecotAuthHandler = () => {
               case 'auth':
                 vars.user = line.split('/')[1]
                 console.log(`Dovecot: looking up auth for ${vars.user}`)
-                db.get(vars.user)
-                  .then(body => {
-                    console.log(`Dovecot: Found entry in db for ${body._id}`)
-                    client.write('O')
-                    client.write(JSON.stringify({ password : body.password }))
-                    client.write('\n')
-                  })
-                  .catch(err => {
-                    console.log('Dovecot: responding with Not Found')
-                    client.write('N\n')
-                  })
+                try {
+                  const body = await db.get(vars.user)
+                  console.log(`Dovecot: Found entry in db for ${body._id}`)
+                  client.write('O')
+                  client.write(JSON.stringify({ password : body.password }))
+                  client.write('\n')
+                } catch(err) {
+                  console.log(`Dovecot: responding with Not Found (${err})`)
+                  client.write('N\n')
+                }
                 break
 
               case 'sieve':
