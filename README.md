@@ -44,15 +44,15 @@ the mailbox document.
 The `password` property is the--ideally--salted and hashed password in a format that
 dovecot understands.
 
-The `sieve` property is a hash with the each sieve script name as the keys, with
-the value being the ID--a random UUID--of a document holding the script's
-contents. The content document holds the script in its `script` property.
+The `sieve` property is a hash with each sieve script's name as a key, and
+the value being the ID--a random UUID--of a document holding the its
+contents in the `script` property.
 
-When we return the ID of the script content document, we include its `_rev`
-appended as Dovecot caches any particular sieve script until its ID changes.
-This lets us use simple static references between documents in our data model,
-while automatically invalidating Dovecot's cache anytime a script's content
-document is changed.
+Because dovecot memoizes its script build cache based on the script ID we
+return, we append the document's `_rev` to the value we return. This lets us
+use simple static references between documents in our data model, while
+automatically invalidating Dovecot's cache anytime a script's content document
+is changed.
 
-This also accepts writes of sieve scripts for clients that support dovecot's
-managesieve protocol.
+This also accepts writes of sieve script contents for in support of dovecot's
+managesieve service.
